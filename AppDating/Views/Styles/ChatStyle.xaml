@@ -1,0 +1,100 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                       xmlns:data="clr-namespace:AppDating.ViewModels"
+                    xmlns:local="clr-namespace:AppDating.Views.Styles">
+    
+    <Style x:Key="BorderSearch"  TargetType="Border" >
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="3"/>
+        <!--<Setter Property="HorizontalAlignment" Value="Center"/>-->
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Margin" Value="2"/>
+    </Style>
+    <Style x:Key="ButUser" TargetType="Button">
+        <Setter Property="Background" Value="#00000000"/>
+        <Setter Property="Height" Value="50"/>
+    </Style>
+    <Style x:Key="BorderUserImage" TargetType="Border" >
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Height" Value="60"/>
+    </Style>
+    <Style x:Key="butCaht" TargetType="Button">
+        <Setter Property="Background" Value="#00000000"/>
+       
+    </Style>
+    <Style x:Key="ButMicrofon" TargetType="Button" BasedOn="{StaticResource butCaht}">
+        <Setter Property="Background"   Value="#0000"/>
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+
+                    <Condition Binding="{Binding RecordOn}" Value="True">
+
+                    </Condition>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Background"   Value="Red"/>
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="TextChat" TargetType="TextBox">
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="0"/>
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                        <Label Margin="5,0,0,0" FontSize="18" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center"
+                           Visibility="Collapsed" Foreground="Gray" FontFamily="Arial"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value=""/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="DimGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="BorderMessage" TargetType="Border">
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="MinWidth" Value="280"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="#EFEBE9"/>
+        <Setter Property="Margin" Value="10,0,60,10"/>
+        <Setter Property="BorderBrush" Value="#BCAAA4"/>
+        <Setter Property="CornerRadius" Value="6,6,6,0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+    <Style x:Key="TextBlockMessage" TargetType="TextBlock">
+        <Setter Property="Margin" Value="7,5,7,0"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+    <Style x:Key="TextBlockTimeMessage" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0,0,5,0"/>
+        <Setter Property="Opacity" Value="0.8"/>
+        <Setter Property="FontSize" Value="10"/>
+    </Style>
+</ResourceDictionary>

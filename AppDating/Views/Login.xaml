@@ -1,0 +1,90 @@
+﻿<Page x:Class="AppDating.Views.Login"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AppDating.Views"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Login">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries >
+                <ResourceDictionary Source="/Views/Styles/LoginStyle.xaml">
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TabControl Style="{StaticResource tab}">
+                <TabItem Header="Log in">
+                    <StackPanel  >
+                        <StackPanel Style="{StaticResource panel}" >
+                            <materialDesign:PackIcon Kind="User" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource TextBoxLogin}" Tag="User name"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource panel}">
+
+                            <materialDesign:PackIcon Kind="Lock" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource TextBoxLogin}" Tag="Password"/>
+                        </StackPanel>
+                        <CheckBox Content="remember me" Margin="15,15,15,0" />
+                        <Button Margin="15" Background="#FF0DE898" Height="40"  >
+                            <TextBlock Text="Sing in"  Foreground="White" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Normal" TextAlignment="Center" TextWrapping="Wrap" />
+                        </Button>
+
+                        <Grid  >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Background="#00000000" Margin="0,0,10,0"  HorizontalAlignment="Right" >
+                                <materialDesign:PackIcon Kind="Google" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                            </Button>
+                            <Button  Background="#00000000" Margin="10,0,0,0"   Grid.Column="1"   HorizontalAlignment="Left">
+                                <materialDesign:PackIcon Kind="Facebook" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Sing up">
+                    <StackPanel>
+                        <StackPanel Style="{StaticResource panel}">
+                            <materialDesign:PackIcon Kind="UserBox" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource TextBoxLogin}" Tag="full name"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource panel}">
+                            <materialDesign:PackIcon Kind="Email" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource TextBoxLogin}" Tag="email"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource panel}">
+                            <materialDesign:PackIcon Kind="User" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource TextBoxLogin}" Tag="new user name"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource panel}">
+                            <materialDesign:PackIcon Kind="Lock" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource TextBoxLogin}" Tag="password"/>
+                        </StackPanel>
+
+                        <StackPanel Style="{StaticResource panel}">
+                            <materialDesign:PackIcon Kind="PasswordReset" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource TextBoxLogin}" Tag="Repeat the password"/>
+                        </StackPanel>
+
+
+
+                       
+                        <Button Margin="15,15,15,0" >
+                            <TextBlock Text="Login"/>
+                        </Button>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </Grid>
+</Page>

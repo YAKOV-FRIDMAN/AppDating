@@ -1,0 +1,277 @@
+﻿<Page x:Class="AppDating.Views.Chat"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AppDating.Views"
+       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+      xmlns:utils="clr-namespace:AppDating.Utils"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         xmlns:data="clr-namespace:AppDating.ViewModels"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1200" 
+      Title="Chat">
+    <Page.DataContext>
+        <data:ChatModel/>
+    </Page.DataContext>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Styles/ChatStyle.xaml">
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate x:Key="MessagesDataTemplate">
+                <Border Name="MessageBorder" Style="{StaticResource BorderMessage}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition Height="15"/>
+                        </Grid.RowDefinitions>
+                        <Grid x:Name="AudioMessageGrid" Grid.Row="0" Margin="5">
+                            <!--<Grid.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=ClipBorder1}"/>
+                            </Grid.OpacityMask>
+                            <Border x:Name="ClipBorder1" CornerRadius="3" Background="White"/>-->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="35"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Button x:Name="ButPley"  Background="#0000"  Command="{Binding DataContext.PlayPushe , 
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType=Page}}" CommandParameter="{Binding Audio}" Grid.RowSpan="1">
+                                <materialDesign:PackIcon Kind="Play"   Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Button>
+                            <Slider   Grid.Column="1" Maximum="{Binding DataContext.PositoMax , 
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType=Page}}" Value="{Binding DataContext.Positon , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged ,  
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType=Page}}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                
+                            </Slider>
+                            <TextBlock Text="{Binding DataContext.PositoMax   , 
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType=Page }}" Grid.Row="1" Grid.Column="1"/>
+                        </Grid>
+                         <!--grid Image-->
+                        <Grid x:Name="ImageMessageGrid" Margin="6,6,6,5">
+                            <Grid.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=ClipBorder}"/>
+                            </Grid.OpacityMask>
+                            <Border x:Name="ClipBorder" CornerRadius="3" Background="White"/>
+                            <Image MaxWidth="350" Stretch="UniformToFill" Cursor="Hand" 
+                               ToolTip="Click to open image in your default image viewer"
+                               Source="{Binding Picture}" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                        <i:InvokeCommandAction
+                                        Command="{Binding DataContext.OpenImageCommand, 
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType=Page}}"
+                                        CommandParameter="{Binding}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                        </Grid>
+                        <TextBlock x:Name="MessageTxtBlock" Grid.Row="1"   Text="{Binding Message}" Style="{StaticResource TextBlockMessage}"/>
+                        <TextBlock Grid.Row="2"  Text="{Binding Time, StringFormat={}{0:t}}" Style="{StaticResource TextBlockTimeMessage}"/>
+
+                    </Grid>
+                </Border>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsOriginNative}" Value="True">
+                        <Setter TargetName="MessageBorder" Property="HorizontalAlignment" Value="Right"/>
+                        <Setter TargetName="MessageBorder" Property="Margin" Value="60,0,10,10"/>
+                        <Setter TargetName="MessageBorder" Property="Background" Value="#BBDEFB"/>
+                        <Setter TargetName="MessageBorder" Property="BorderBrush" Value="#64B5F6"/>
+                        <Setter TargetName="MessageBorder" Property="CornerRadius" Value="6,6,0,6"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding DataContext.IsPlay , 
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType=Page}}" Value="true">
+                        <Setter TargetName="ButPley" Property="Content" >
+                            <Setter.Value>
+                                <materialDesign:PackIcon Kind="Stop" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Audio}"  Value="{x:Null}">
+                        <Setter TargetName="AudioMessageGrid" Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Picture}" Value="{x:Null}">
+                        <Setter TargetName="ImageMessageGrid" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Message}" Value="{x:Null}">
+                        <Setter TargetName="MessageTxtBlock" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="MessageBorder" Property="MaxWidth" Value="320"/>
+                    </DataTrigger>
+                    
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Message}" Value="{x:Null}"/>
+                            <Condition Binding="{Binding IsOriginNative}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter TargetName="MessageBorder" Property="Margin" Value="0,0,10,10"/>
+                            <Setter TargetName="MessageBorder" Property="HorizontalAlignment" Value="Right"/>
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+                </DataTemplate.Triggers>
+        </DataTemplate>
+        </ResourceDictionary>
+        
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="43"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Background="Gray">
+            <Border Style="{StaticResource BorderSearch}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="187*"/>
+                        <ColumnDefinition Width="25*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Text="test text" BorderThickness="0" FontSize="17"></TextBox>
+                    <materialDesign:PackIcon Kind="Search" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+        <Grid Grid.Column="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="/Assets/9.png"/>
+            <TextBlock Grid.Column="1" Text="coen" FontSize="18"   VerticalAlignment="Center"/>
+        </Grid>
+        <ScrollViewer   Grid.Row="1" Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <StackPanel >
+                <ListView ItemsSource="{Binding People}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <!--<Button x:Name="b"  Width="200"   Style="{StaticResource ButUser}">
+                                <Button.Content  >-->
+
+                            <Grid  Height="60"  >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.RowSpan="1"   Style="{StaticResource BorderUserImage}" >
+                                    <Image Source="{Binding Image}"/>
+                                </Border>
+                                <TextBlock Text="{Binding FirstName}" Grid.Column="1"/>
+                                <TextBlock Width="200" TextWrapping="Wrap" Text="{Binding AboutMyself}" Grid.Column="1" Grid.Row="1" />
+                                <TextBlock Grid.Column="2" Text="14:23"/>
+                                <Ellipse  Grid.Column="2" Grid.Row="1" Height="15" Width="15" Fill="#FF05AC1C" />
+                            </Grid>
+                            <!--</Button.Content>
+                            </Button>-->
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
+        <Image Source="/Assets/3305327.jpg" Grid.Row="1" Grid.Column="1" StretchDirection="Both" Stretch="Fill" Opacity="0.7" OpacityMask="Black"/>
+        <ItemsControl Grid.Column="1" Grid.Row="1" Margin="0,5,0,0" 
+                      ItemsSource="{Binding SelectedParticipant.Chatter}" 
+                      ItemTemplate="{DynamicResource MessagesDataTemplate}"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <i:Interaction.Behaviors>
+                <utils:BringNewItemIntoViewBehavior/>
+            </i:Interaction.Behaviors>
+            <ItemsControl.Template>
+                <ControlTemplate TargetType="ItemsControl">
+                    <ScrollViewer>
+                        <ItemsPresenter/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+        </ItemsControl>
+        <Grid Grid.Row="2" Grid.Column="1" Background="Gray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding SendAudioOfMicrofn}" Style="{StaticResource ButMicrofon}" >
+               
+                <materialDesign:PackIcon Kind="Microphone" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+             
+            </Button>
+
+            <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False"  Grid.Column="1">
+                <StackPanel Width="150" Background="Gray">
+                    <Button  >
+                        <DockPanel>
+
+                            <materialDesign:PackIcon Kind="File" DockPanel.Dock="Left"   Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Margin="10,0,0,0" Text="Add file" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </DockPanel>
+
+                    </Button>
+                    <Button Command="{Binding SendImageMessageCommand}">
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Image"  DockPanel.Dock="Left"   Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Margin="10,0,0,0" Text="Add image in video" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                             
+                        </DockPanel>
+                    </Button>
+
+                    <Button>
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Camera"   DockPanel.Dock="Left"   Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Margin="10,0,0,0" Text="Take a picture" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                        </DockPanel>
+                    </Button>
+                    <Button>
+                        <DockPanel>
+                            <materialDesign:PackIcon Kind="Contact"  DockPanel.Dock="Left"   Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Margin="10,0,0,0" Text="Add contact" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                        </DockPanel>
+                    </Button>
+
+                </StackPanel>
+            </materialDesign:PopupBox>
+          
+
+            <Border Grid.Column="2" Style="{StaticResource BorderSearch}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox  Text="{Binding TextMessage , UpdateSourceTrigger=PropertyChanged}"  Tag="Type a message"
+                        Style="{StaticResource TextChat}" >
+        
+                    </TextBox>
+                    <Button Grid.Column="1" Command="{Binding SendTextMessageCommand}" Style="{StaticResource butCaht}" BorderThickness="0">
+                        <materialDesign:PackIcon Kind="Send" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Button Command="{Binding SendTextMessagerigehCommand}" Style="{StaticResource butCaht}" Grid.Column="3">
+                <materialDesign:PackIcon Kind="Smiley" Grid.Column="1"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            </Button>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,187 @@
+﻿<Page xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  x:Class="AppDating.Views.SearchLove"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AppDating.Views"
+         xmlns:eo="http://schemas.essentialobjects.com/wpf/"
+     xmlns:data="clr-namespace:AppDating.ViewModels"
+      mc:Ignorable="d" 
+     
+      Title="SearchLove">
+    <Page.DataContext>
+        <data:SerachLovePerson/>
+    </Page.DataContext>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Styles/SearechLove.xaml">
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel  >
+            <Border BorderThickness="0,0,0,3" Background="White" CornerRadius="2">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="5" />
+
+
+                </Border.Effect>
+
+                <StackPanel >
+                <StackPanel Style="{StaticResource StackSerch}">
+                    <TextBlock Style="{StaticResource textSer}" Text="i' am search"/>
+                    <Button Style="{StaticResource RoundCorner}" Content="woman"/>
+                    <Button Style="{StaticResource RoundCorner}" Content="man"/>
+                    <eo:RangeSlider   Minimum="18" Maximum="80" RangeStart="20"
+                 RangeEnd="30" TickPlacement="Both" TickFrequency="18" Width="130">
+                    </eo:RangeSlider>
+                </StackPanel>
+                 
+                    <DockPanel   Margin="20,0" >
+                    <Button Margin="0,0,10,0">
+                        <materialDesign:PackIcon Kind="FormatListCheckbox" Width="25" Height="25"/>
+                    </Button>
+                    <Button  Command="{Binding TestClick}"  >
+                        <materialDesign:PackIcon Kind="ContactMail"  Width="25" Height="25"/>
+                    </Button>
+                        <TextBlock Text="result: 45320" FontSize="18"  DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </DockPanel>
+            </StackPanel>
+            </Border>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="0,0,0,20">
+                <ItemsControl ItemsSource="{Binding People}"  >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource borderItem}"  >
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="10" ShadowDepth="5" />
+                             
+
+                                </Border.Effect>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Margin="10">
+                                        <Border.Effect>
+                                            <DropShadowEffect ShadowDepth="2"/>
+                                        </Border.Effect>
+                                        <Border.Background >
+                                            <ImageBrush  ImageSource="{Binding  Image}"/>
+                                        </Border.Background>
+                                    </Border>
+                                    <Button Width="150"    Style="{StaticResource RoundCorner}"  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="a message" FontSize="18"/>
+                                            <materialDesign:PackIcon Kind="Message"  Margin="5,0,0,0" Width="25" Height="25" Grid.Column="1" Foreground="#FFEE0E92"/>
+                                        </Grid>
+                                    </Button>
+                                    <Grid Grid.Column="1" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource tetxTitles}" Text="Lest name:"/>
+                                        <TextBlock Style="{StaticResource tetxTitles}" Grid.Row="1" Text="First name:"/>
+                                        <TextBlock Style="{StaticResource tetxTitles}" Grid.Row="2" Text="Age:"/>
+                                        <TextBlock Style="{StaticResource tetxTitles}" Grid.Row="3" Text="Education:"/>
+                                        <TextBlock Style="{StaticResource tetxTitles}" Grid.Row="4" Text="About myseif:"/>
+                                        <TextBlock Style="{StaticResource tetxProp}" Grid.Row="0" Grid.Column="1" Text="{Binding LastName}"/>
+                                        <TextBlock Style="{StaticResource tetxProp}" Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}"/>
+                                        <TextBlock Style="{StaticResource tetxProp}" Grid.Row="2" Grid.Column="1" Text="{Binding Age}"/>
+                                        <TextBlock Style="{StaticResource tetxProp}" Grid.Row="3" Grid.Column="1" Text="{Binding Education}"/>
+                                        <TextBlock TextWrapping="Wrap" FontSize="18" Grid.Row="5"   Grid.ColumnSpan="2" Text="{Binding AboutMyself}"/>
+                                        
+                                    </Grid>
+                                    <Button Width="150"  Command="{Binding TestClick}"  CommandParameter="{Binding LastName}"  Style="{StaticResource RoundCorner}"  Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="full ticket" FontSize="18"/>
+                                            <materialDesign:PackIcon Kind="CardAccountDetails" Margin="5,0,0,0" Width="25" Height="25" Grid.Column="1" Foreground="#FFEE0E92"/>
+                                        </Grid>
+                                    </Button>
+                                    <Grid Grid.Column="2">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Height:" Style="{StaticResource tetxTitles}"/>
+                                        <TextBlock Text="Children:" Grid.Row="1" Style="{StaticResource tetxTitles}"/>
+                                        <TextBlock Text="Profession:" Grid.Row="2" Style="{StaticResource tetxTitles}"/>
+                                        <TextBlock Text="City:" Grid.Row="3" Style="{StaticResource tetxTitles}"/>
+                                        <TextBlock Text="Body structure:" Grid.Row="4" Style="{StaticResource tetxTitles}"/>
+                                        <TextBlock Text="Ethnic origin:" Grid.Row="5" Style="{StaticResource tetxTitles}"/>
+                                        <TextBlock Text="{Binding Height}"  Grid.Column="1" Style="{StaticResource tetxProp}"/>
+                                        <TextBlock Text="{Binding Children}" Grid.Row="1"  Grid.Column="1" Style="{StaticResource tetxProp}"/>
+                                        <TextBlock Text="{Binding Profession}" Grid.Row="2"  Grid.Column="1" Style="{StaticResource tetxProp}"/>
+                                        <TextBlock Text="{Binding Ctiy}" Grid.Row="3"  Grid.Column="1" Style="{StaticResource tetxProp}"/>
+                                        <TextBlock Text="{Binding BodyStructure}" Grid.Row="4"  Grid.Column="1" Style="{StaticResource tetxProp}"/>
+                                        <TextBlock Text="{Binding EthnicOrigin}" Grid.Row="5"  Grid.Column="1" Style="{StaticResource tetxProp}"/>
+                                    </Grid>
+                                    <Grid Grid.Column="3" Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <materialDesign:PackIcon Kind="Like"  Width="25" Height="25"/>
+                                        </Button>
+                                        <Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <materialDesign:PackIcon Kind="Favorite"  Width="25" Height="25"/>
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                
+                            </Border>
+                            
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel HorizontalAlignment="Center" Orientation="Vertical"></WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
